@@ -1,77 +1,72 @@
 # FlyingComputer
 
 ## Architecture
-![alt text](https://raw.githubusercontent.com/therooftopprinz/FlyingComputer/master/Architecture/wholesystemv0.png "Architecture")
-## FlyBasic
-Basic control input to output mapping.
-## FlyModules
+<img src="https://raw.githubusercontent.com/therooftopprinz/FlyingComputer/master/Architecture/swcomponents.png" alt="Architecture" width="1080"/>
 
-### GY-801 (cancelled in favor of BNO55)
-Driver status
-* L3G4200D - **DONE**
-* ADXL345 - **Not tested**
-* HMC5883L - **CANCELLED**
-* BMP180 - **MOVED**
+## Software Components
+- [propertytree](https://github.com/therooftopprinz/propertytree/)
+- HAL : HAL Interface facing userspace modules (UMOD) to access the connected devices.
+  - HAL-WiringPi - Implements interface using WiringPi.
+  - HAL-WiringOP - Implements interface using WiringOP.
+  - HAL-Arduino - Implements interface using Arduino.
+  - HAL-Client - Implements interface to access simulated devices
+  - HAL-Server - Implements the simulated devices
+    - SIM-ICM42688P
+      - Interface : I2C,SPI
+    - SIM-GPIO
+      - Interface : GPIO
+    - SIM-MS4525DO
+      - Interface : I2C,SPI
+    - SIM-NEO6M
+      - Interface : UART
+    - SIM-BMP280
+      - Interface : I2C,SPI
+    - SIM-PCA9685
+      - Interface : I2C
+    - SIM-HMC5883L
+      - Interface : I2C
+    - SIM-DSERVO
+      - Interface : I2C
+    - SIM-DESC
+      - Interface : I2C
+    - SIM-VL53L0X
+      - Interface : I2C
+- UMOD : Userspace Modules
+  - UMOD-IMU : Handles IMU devices
+    - Drivers:
+      - DRV-ICMx
+      - DRV-MPUx
+  - UMOD-NAV : Handles NAV devices
+    - Drivers
+      -DRV-NEOx
+      -DRV-BMPx
+      -DRV-VL53L0x
+  - UMOD-SRVO : Handles Servos devices
+    - Drivers:
+      - DRV-GPIO
+      - DRV-DSRVO
+  - UMOD-ENG : Handles Engine/ESC devices
+    - Drivers:
+      - DRV-GPIO
+      - DRV-DESC
+  - UMOD-ASPD : Handles Airspeed and AOA devices
+    - Drivers:
+      - DRV-MSx
+      - DRV-GPIO
+  - UMOD-VID : Handles Video/Audio devices
 
-### BNO55
-9-DOF IMU with sensor fusion over UART.
+## HAL
+HAL is the interface the drivers uses in UMOD. It provides access to device through system implementations (spidev/smbus/esp-idf/arduino).
 
-### BMP180
-Temperature and Pressure sensor over I2C.
+<img src="https://raw.githubusercontent.com/therooftopprinz/FlyingComputer/master/Architecture/HAL.png" alt="Architecture" width="1080"/>
 
-### PCA9685
-16-channel 16-bit PWM controller over I2C.
+## Miletones
 
-### Nano
-Collects data from GY-NEO6MV2 over UART2, Differential Pressure sensor over analog and interfaces Raspberry Pi over bb UART.
-
-## FlyItf AIR
-Interfaces GND to FlyDb over FlyComm (PiLoRa).<br />
-Schedules periodic downlink data from FlyDb.
-
-**LoRa Packet Definition**
-
-| Name | Description | Size |
-|------|-------------|------|
-| TYPE	| Message Id		| 1 |
-| SN	| Sequence Number	| 1 |
-| MAC	| Message Integrity	| 2 |
-| DATA	| Data Payload		| N |
-
-**Payload Format**
-
-| ID	| Name	| Size |
-|-------|-------|------|
-| UID	| Param Identifier	| 1 |
-| SIZ	| Proceeding Size	| 1 |
-| DAT	| Data |SIZ |
-
-SIZ and DAT are always pair.
-
-**Message Definitions**
-
-| Message Type	| Message Name	| Data Payload |
-|---------------|---------------|--------------|
-| 0	|Read Group Request	| UID
-| 1	| Read Group Response	| DAT
-| 2	| Write Group Request	| UID \| SIZ \| DAT
-| 3	| Write Group Response	
-| 4	| Write Group Indication	| UID \| SIZ \| DAT
-| 5	| Read Data Request	| UID
-| 6	| Read Data Response	| SIZ \| DAT
-| 7	| Write Data Request	| UID \| SIZ \| DAT
-| 8	| Write Data Response	
-| 9	| Write Data Indication	| UID \| SIZ \| DAT
-
-## FlyItf GND
-Interfaces FlyDb to user input / output display.<br />
-Schedules periodic uplink data from user input and setting.
-
-## FlyComm
-see https://github.com/therooftopprinz/PiLoRa
-
-
-## FlyPilot
-Advance auto pilot and fly by wire.
-
-![alt text](https://raw.githubusercontent.com/therooftopprinz/FlyingComputer/master/Architecture/fcapcs.png "FlyAdvance")
+- [x] PropertyTree Value
+- [ ] PropertyTree Node
+- [ ] HAL Interface
+- [ ] SIM-ICM42688P
+- [ ] DRV-ICM42688P
+- [ ] UMOD-IMU
+- [ ] MSFS2020 SimConnect IMU
+- [ ] APP-ORIPOS and APP-IOMIXER
