@@ -64,9 +64,14 @@ HAL is the interface the drivers uses in UMOD. It provides access to device thro
 
 - [x] PropertyTree Value
 - [ ] PropertyTree Node
-- [ ] HAL Interface
-- [ ] SIM-ICM42688P
-- [ ] DRV-ICM42688P
-- [ ] UMOD-IMU
+- [x] HAL Interface
+- [ ] halsim
+ - [ ] hal_client
+ - [ ] hal_server
+ - [ ] sim-rtc
+- [ ] drv-icm42688p
+- [ ] drv-rtcsi
+- [ ] umod-imu
+- [ ] umod-imu
 - [ ] MSFS2020 SimConnect IMU
 - [ ] APP-ORIPOS and APP-IOMIXER

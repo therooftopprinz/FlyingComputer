@@ -2,9 +2,16 @@
 #define __HAL_HAL_HPP__
 
 #include <hal/spi.hpp>
+#include <hal_ipc/ipc_cmds.hpp>
+#include <hal_ipc/ipc.hpp>
 
 namespace hal
 {
+
+struct spi_context_s
+{
+    
+};
 
 spi_t spi_init(const spi_id_s& id, unsigned cs_pin, const spi_config_s& config)
 {

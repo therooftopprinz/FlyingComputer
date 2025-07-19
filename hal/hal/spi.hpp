@@ -10,7 +10,7 @@ namespace hal
 
 struct spi_config_s
 {
-    enum mode_e
+    enum mode_e : uint8_t
     {
         MODE0, // CPOL=0, CPHA=0
         MODE1, // CPOL=0, CPHA=1
@@ -18,7 +18,7 @@ struct spi_config_s
         MODE3  // CPOL=1, CPHA=1
     };
 
-    enum bit_order_e
+    enum bit_order_e : uint8_t
     {
         BIT_ORDER_MSB = 0,
         BIT_ORDER_LSB

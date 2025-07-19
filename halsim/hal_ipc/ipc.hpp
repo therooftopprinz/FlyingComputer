@@ -9,6 +9,7 @@ namespace hal
 struct command_s
 {
     size_t data_sz;
+    std::byte data[1024];
     bool satisfied;
     mutex m;
     condition_variable cv;
@@ -23,7 +24,7 @@ public:
         return cmd_queue[head];
     }
 
-    void enqueue(std::byte* in, size_t in_sz, std::byte* out, size_t& out_sz)
+    void enqueue(const std::byte* in, size_t in_sz, std::byte* out, size_t& out_sz)
     {
         size_t i = 0;
 
@@ -41,9 +42,9 @@ public:
 
         auto& c = cmd_queue[i];
 
-        // c.in_sz = in_sz;
+        c.data_sz = in_sz;
         c.satisfied = false;
-        // std::memcpy(c.data, in, in_sz);
+        std::memcpy(c.data, in, c.data_sz);
         
         {
             scoped_lock lg(c.m);
@@ -52,8 +53,8 @@ public:
                 c.cv.wait(lg);
             }
 
-            // out_sz = c.out_sz;
-            // std::memcpy(out, c.data, c.out_sz);
+            out_sz = c.data_sz;
+            std::memcpy(out, c.data, c.data_sz);
         }
 
         {
