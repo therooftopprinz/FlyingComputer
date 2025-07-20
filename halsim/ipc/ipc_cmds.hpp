@@ -1,8 +1,8 @@
 #ifndef __HALSIM_IPC_IPC_HPP__
 #define __HALSIM_IPC_IPC_HPP__
 
-#include <hal_ipc/sync.hpp>
-#include <hal/spi.hpp>
+#include "ipc/sync.hpp"
+#include "hal/spi.hpp"
 
 namespace hal
 {
@@ -47,7 +47,7 @@ struct cmd_spi_release_bus_s
     uint8_t bus;
 };
 
-struct cmd_spi_xfer
+struct cmd_spi_xfer_s
 {
     cmd_e type = cmd_e::E_CMD_SPI_XFER;
     uint8_t bus;
@@ -124,7 +124,6 @@ static_assert(1024 >= sizeof(cmd_i2c_start_s));
 static_assert(1024 >= sizeof(cmd_i2c_stop_s));
 static_assert(1024 >= sizeof(cmd_i2c_read_s));
 static_assert(1024 >= sizeof(cmd_i2c_write_s));
-
 
 } // namespace hal
 

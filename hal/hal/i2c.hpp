@@ -40,7 +40,7 @@ void i2c_deinit(i2c_t master);
 int  i2c_start(i2c_t master, uint16_t address);
 int  i2c_stop(i2c_t master);
 int  i2c_read(i2c_t master, std::byte *data, size_t count);
-int  i2c_read(i2c_t master, const std::byte *data, size_t count);
+int  i2c_write(i2c_t master, const std::byte *data, size_t count);
 
 } // namespace hal
 

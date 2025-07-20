@@ -42,10 +42,7 @@ public:
 
     ~mutex()
     {
-        if (0 != pthread_mutex_destroy(&m_mutex))
-        {
-            throw std::runtime_error(format("Failed to destroy mutex error=%s", strerror(errno)));
-        }
+        pthread_mutex_destroy(&m_mutex);
     }
 
     mutex(const mutex&) = delete;

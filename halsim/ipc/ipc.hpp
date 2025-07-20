@@ -1,7 +1,7 @@
 #ifndef __HALSIM_IPC_IPC_HPP__
 #define __HALSIM_IPC_IPC_HPP__
 
-#include <hal_ipc/sync.hpp>
+#include <halsim_ipc/sync.hpp>
 
 namespace hal
 {
